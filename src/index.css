@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   RARE DEV — DESIGN TOKENS (dark-first)
+   Shared by every page. Parts 2 & 3 extend this system,
+   never replace it.
+   ============================================================ */
+@layer base {
+  :root {
+    --background: 220 8% 4%;
+    --foreground: 220 15% 96%;
+
+    --card: 220 14% 8%;
+    --card-foreground: 220 15% 96%;
+    --popover: 220 14% 8%;
+    --popover-foreground: 220 15% 96%;
+
+    --primary: 220 15% 96%;
+    --primary-foreground: 220 8% 4%;
+    --secondary: 220 8% 12%;
+    --secondary-foreground: 220 15% 96%;
+
+    --muted: 220 8% 12%;
+    --muted-foreground: 220 6% 62%;
+
+    --accent: 220 8% 14%;
+    --accent-foreground: 220 15% 98%;
+
+    --destructive: 0 72% 52%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 8% 16%;
+    --input: 220 8% 16%;
+    --ring: 184 100% 50%;
+
+    /* Brand signal — small cyan accents, used sparingly */
+    --signal: 184 91% 58%;
+    /* Electric blue — lighting, highlights, large surfaces of colour */
+    --electric: 221 100% 54%;
+    /* Light editorial surface for contrast sections */
+    --paper: 220 13% 96%;
+    --paper-foreground: 220 10% 7%;
+
+    --surface: 220 14% 8%;
+
+    --chart-1: 184 100% 50%;
+    --chart-2: 0 0% 72%;
+    --chart-3: 240 4% 32%;
+    --chart-4: 187 42% 42%;
+    --chart-5: 200 12% 58%;
+
+    --radius: 0.25rem;
+
+    --font-display: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --sidebar-background: 240 4% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 0 0% 95%;
+    --sidebar-primary-foreground: 240 5% 4%;
+    --sidebar-accent: 240 4% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 4% 15%;
+    --sidebar-ring: 184 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+
+  ::selection {
+    background: hsl(var(--signal));
+    color: hsl(var(--background));
+  }
+
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Accessible keyboard focus, without disturbing pointer focus styling */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid hsl(var(--signal));
+    outline-offset: 3px;
+  }
+}
+
+/* ============================================================
+   MOTION — subtle, purposeful
+   ============================================================ */
+@keyframes line-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes flow-trace {
+  to {
+    stroke-dashoffset: -160;
+  }
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.rv-flow {
+  stroke-dasharray: 3 9;
+  animation: flow-trace 6s linear infinite;
+}
+
+.rv-dot {
+  animation: dot-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(-2%, 0, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(2%, -1.5%, 0) scale(1.06);
+    opacity: 0.8;
+  }
+}
+
+.rv-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+@layer utilities {
+  .container-rv {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 90rem;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-rv {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-rv {
+      padding-inline: 3rem;
+    }
+  }
+
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Technical blueprint grid */
+  .blueprint {
+    background-image: linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .blueprint-fade {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 100%);
+  }
+
+  /* Quiet page transition between routes */
+  .page-in {
+    animation: page-in 0.5s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  }
+
+  /* Credential strip — continuous, respectful of reduced motion */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   V2 STYLE — floating glass + glow helpers
+   ============================================================ */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.float-slow {
+  animation: float-y 7s ease-in-out infinite;
+}
+
+.float-fast {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .float-fast {
+    animation: none;
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "ProjectInquiry",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Name of the person enquiring"
+    },
+    "email": {
+      "type": "string",
+      "description": "Reply-to email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "WhatsApp or phone number, if provided"
+    },
+    "company": {
+      "type": "string",
+      "description": "Company or organisation"
+    },
+    "project_type": {
+      "type": "string",
+      "description": "The kind of project the enquiry is about"
+    },
+    "budget": {
+      "type": "string",
+      "description": "The client's indicated budget range"
+    },
+    "timeline": {
+      "type": "string",
+      "description": "When they would like to start"
+    },
+    "features": {
+      "type": "string",
+      "description": "Required features, if listed"
+    },
+    "message": {
+      "type": "string",
+      "description": "What they are building and what they need"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewed",
+        "archived"
+      ],
+      "default": "new",
+      "description": "Internal triage state"
+    }
+  },
+  "required": [
+    "full_name",
+    "email",
+    "message"
+  ]
+}
